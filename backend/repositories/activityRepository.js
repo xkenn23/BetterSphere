@@ -1,4 +1,4 @@
-import { Activity } from "../models/activitySchema.js";
+import { Activity } from "../models/activity.js";
 
 export const activityRepository = {
   createActivity: async (activityData) => {

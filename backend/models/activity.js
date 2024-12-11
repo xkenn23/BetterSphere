@@ -16,6 +16,10 @@ const activitySchema = new mongoose.Schema(
       required: true,
     },
     invitees: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    bannerImage: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 );

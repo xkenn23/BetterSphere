@@ -3,13 +3,32 @@ import { generateReferralCode } from "../utils/referral.js";
 
 export const activityService = {
   /**
-   * Create a new activity
+   * Create a new activity with optional banner image upload
    * @param {Object} activityData - The data for the new activity
-   * @returns {Object} - The created activity with a referral code
+   * @param {Object} file - The uploaded file (optional)
+   * @returns {Object} - The created activity with referral code
    */
-  createActivity: async (activityData) => {
-    // Generate a unique referral code for the activity
+  createActivity: async (activityData, file) => {
+    // Generate a unique referral code
     activityData.referralCode = generateReferralCode();
+
+    // If a file is provided, upload it to Cloudinary
+    if (file) {
+      const uploadResult = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { resource_type: "image", folder: "activities" },
+          (error, result) => {
+            if (error) return reject(new Error("Cloudinary upload failed"));
+            resolve(result.secure_url);
+          }
+        );
+        file.stream.pipe(uploadStream); // Multer provides the file stream
+      });
+
+      activityData.bannerImage = uploadResult; // Save the secure URL
+    }
+
+    // Save activity to the database
     const newActivity = await activityRepository.createActivity(activityData);
     return newActivity;
   },

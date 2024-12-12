@@ -5,12 +5,17 @@ import { activityService } from "../services/activityService.js";
  */
 export const createActivity = async (req, res) => {
   try {
-    const activityData = req.body;
-    activityData.owner = req.user.id; // Assumes `req.user` contains authenticated user info
-    const activity = await activityService.createActivity(activityData);
-    res.status(201).json(activity);
+    const { id: userId } = req.user; // Extract user ID from authenticated user
+    const activityData = { ...req.body, owner: userId }; // Include owner in the activity data
+    const file = req.file; // Multer handles file parsing
+
+    const newActivity = await activityService.createActivity(
+      activityData,
+      file
+    );
+    res.status(201).json(newActivity);
   } catch (error) {
-    res.status(500).json({ error: error.message || "Server error" });
+    res.status(500).json({ error: error.message || "Server Error" });
   }
 };
 
@@ -19,8 +24,8 @@ export const createActivity = async (req, res) => {
  */
 export const getAllActivities = async (req, res) => {
   try {
-    const filter = req.query || {}; // Apply any filters from query parameters
-    const activities = await activityService.findAllActivities(filter);
+    const filter = req.query || {};
+    const activities = await activityService.getAllActivities(filter);
     res.status(200).json(activities);
   } catch (error) {
     res.status(500).json({ error: error.message || "Server error" });

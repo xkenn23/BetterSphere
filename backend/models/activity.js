@@ -20,6 +20,11 @@ const activitySchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    referralCode: {
+      type: String,
+      require: true,
+      unique: true,
+    },
   },
   { timestamps: true }
 );

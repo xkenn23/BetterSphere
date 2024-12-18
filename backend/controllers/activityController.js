@@ -33,15 +33,15 @@ export const getAllActivities = async (req, res) => {
 };
 
 /**
- * Get an activity by ID
+ * Get activities by owner ID
  */
-export const getActivityById = async (req, res) => {
+export const getActivitiesByOwnerId = async (req, res) => {
   try {
-    const activity = await activityService.findActivityById(req.params.id);
-    if (!activity) return res.status(404).json({ error: "Activity not found" });
-    res.status(200).json(activity);
+    const ownerId = req.params.ownerId; // Get ownerId from req.params
+    const activities = await activityService.getActivitiesByOwnerId(ownerId);
+    res.status(200).json(activities);
   } catch (error) {
-    res.status(500).json({ error: error.message || "Server error" });
+    res.status(404).json({ error: error.message || "Server error" });
   }
 };
 

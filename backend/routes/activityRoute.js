@@ -3,11 +3,11 @@ import { protect } from "../middleware/authMiddleware.js";
 import {
   createActivity,
   deleteActivity,
-  getActivityById,
   getAllActivities,
   joinActivityByReferralCode,
   removeInvitee,
   updateActivity,
+  getActivitiesByOwnerId,
 } from "../controllers/activityController.js";
 
 const router = express.Router();
@@ -19,7 +19,7 @@ router.post("/create", protect, createActivity);
 router.get("/", protect, getAllActivities);
 
 // route to get activity by Id
-router.get("/:id", protect, getActivityById);
+router.get("/:ownerId", protect, getActivitiesByOwnerId);
 
 // route to update an activity
 router.put("/:id", protect, updateActivity);

@@ -6,8 +6,9 @@ export const activityRepository = {
     return await activity.save();
   },
 
-  findActivityById: async (id) => {
-    return await Activity.findById(id).populate("owner invitees");
+  findActivityByOwnerId: async (ownerId) => {
+    console.log("Query:", { owner: ownerId });
+    return await Activity.find({ owner: ownerId }).populate("owner invitees");
   },
 
   findAllActivities: async (filter) => {

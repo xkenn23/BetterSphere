@@ -34,14 +34,17 @@ export const activityService = {
   },
 
   /**
-   * Get activity by ID
-   * @param {String} id - The ID of the activity
-   * @returns {Object} - The found activity
+   * Get activities by owner ID
+   * @param {String} ownerId - The ID of the activity owner
+   * @returns {Array} - The activities found
    */
-  getActivityById: async (id) => {
-    const activity = await activityRepository.findActivityById(id);
-    if (!activity) throw new Error("Activity not found");
-    return activity;
+  getActivitiesByOwnerId: async (ownerId) => {
+    const activities = await activityRepository.findActivityByOwnerId(ownerId);
+    console.log("Owner ID in service:", ownerId, typeof ownerId); // Log ownerId and its type
+    if (!activities || activities.length === 0) {
+      throw new Error("No activities found for this owner");
+    }
+    return activities;
   },
 
   /**

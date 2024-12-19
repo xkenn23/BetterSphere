@@ -15,6 +15,15 @@ export const activityRepository = {
     return await Activity.find(filter).populate("owner invitees");
   },
 
+  /**
+   * Get an activity by ID
+   * @param {String} id - The ID of the activity
+   * @returns {Object} - The activity
+   */
+  getActivityById: async (id) => {
+    return await Activity.findById(id).populate("owner invitees");
+  },
+
   updateActivity: async (id, updates) => {
     return await Activity.findByIdAndUpdate(id, updates, { new: true });
   },

@@ -46,6 +46,22 @@ export const getActivitiesByOwnerId = async (req, res) => {
 };
 
 /**
+ * Get an activity by ID
+ */
+export const getActivityById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const activity = await activityService.getActivityById(id);
+    if (!activity) {
+      return res.status(404).json({ error: "Activity not found" });
+    }
+    res.status(200).json(activity);
+  } catch (error) {
+    res.status(500).json({ error: error.message || "Server error" });
+  }
+};
+
+/**
  * Update an activity
  */
 export const updateActivity = async (req, res) => {

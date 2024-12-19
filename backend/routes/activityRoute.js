@@ -5,6 +5,7 @@ import {
   deleteActivity,
   getAllActivities,
   joinActivityByReferralCode,
+  getActivityById,
   removeInvitee,
   updateActivity,
   getActivitiesByOwnerId,
@@ -20,6 +21,9 @@ router.get("/", protect, getAllActivities);
 
 // route to get activity by Id
 router.get("/:ownerId", protect, getActivitiesByOwnerId);
+
+// route to get activity by ID
+router.get("/single/:id", protect, getActivityById);
 
 // route to update an activity
 router.put("/:id", protect, updateActivity);

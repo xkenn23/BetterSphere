@@ -57,6 +57,19 @@ export const activityService = {
   },
 
   /**
+   * Get an activity by ID
+   * @param {String} id - The ID of the activity
+   * @returns {Object} - The activity details
+   */
+  getActivityById: async (id) => {
+    const activity = await activityRepository.getActivityById(id);
+    if (!activity) {
+      throw new Error("Activity not found");
+    }
+    return activity;
+  },
+
+  /**
    * Update an activity
    * @param {String} id - The ID of the activity
    * @param {Object} updates - The updates to be applied

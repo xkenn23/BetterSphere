@@ -22,4 +22,9 @@ export const activityRepository = {
   deleteActivity: async (id) => {
     return await Activity.findByIdAndDelete(id);
   },
+
+  findActivityByReferralCode: async (referralCode) => {
+    console.log("Query:", { referralCode });
+    return await Activity.findOne({ referralCode }).populate("owner invitees");
+  },
 };

@@ -28,7 +28,7 @@ router.put("/:id", protect, updateActivity);
 router.delete("/:id", protect, deleteActivity);
 
 // route to join an activity by referral code
-router.post("/join/:referralCode", joinActivityByReferralCode);
+router.post("/join/:referralCode", protect, joinActivityByReferralCode);
 
 // route to remove an invitee from an activity.
 router.delete("/:activityId/invitees/:userId", removeInvitee);
